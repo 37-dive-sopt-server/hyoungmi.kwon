@@ -5,6 +5,7 @@ import org.sopt.domain.Member;
 import org.sopt.repository.MemoryMemberRepository;
 import org.sopt.service.MemberServiceImpl;
 import java.util.*;
+import static org.sopt.validator.MemberValidator.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,11 +30,61 @@ public class Main {
 
             switch (choice) {
                 case "1":
-                    System.out.print("등록할 회원 이름을 입력하세요: ");
-                    String name = scanner.nextLine();
+                    String name;
+                    String birthday;
+                    String email;
+                    String gender;
+
+                    while (true) {
+                        System.out.print("등록할 회원 이름을 입력하세요: ");
+                        name = scanner.nextLine();
+
+                        try {
+                            validateName(name); // 🔥 이름만 먼저 검증
+                            break; // 유효하면 루프 종료
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("❌ " + e.getMessage());
+                        }
+                    }
+
+                    while (true) {
+                        System.out.print("등록할 회원의 생년월일을 입력하세요(YYYY-MM-DD): ");
+                        birthday = scanner.nextLine();
+
+                        try {
+                            validateBirthday(birthday);
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("❌ " + e.getMessage());
+                        }
+                    }
+
+                    while (true) {
+                        System.out.print("등록할 회원의 이메일을 입력하세요: ");
+                        email = scanner.nextLine();
+
+                        try {
+                            validateEmail(email);
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("❌ " + e.getMessage());
+                        }
+                    }
+
+                    while (true) {
+                        System.out.print("등록할 회원의 성별을 입력하세요 (MALE/FEMALE): ");
+                        gender = scanner.nextLine();
+
+                        try {
+                            validateGender(gender);
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("❌ " + e.getMessage());
+                        }
+                    }
 
                     try {
-                        Long createdId = memberController.createMember(name);
+                        Long createdId = memberController.createMember(name, birthday, email, gender);
                         System.out.println("✅ 회원 등록 완료 (ID: " + createdId + ")");
                     } catch (IllegalArgumentException e) {
                         System.out.println("❌ 회원 등록 실패" + e.getMessage());
