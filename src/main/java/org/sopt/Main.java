@@ -1,12 +1,17 @@
 package org.sopt;
 
+import org.sopt.controller.MemberController;
+import org.sopt.domain.Member;
+import org.sopt.repository.MemoryMemberRepository;
+import org.sopt.service.MemberServiceImpl;
 import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) {
-        Map<Long, Member> store = new HashMap<>();
-        long sequence = 1L;
+
+        MemoryMemberRepository memberRepository = new MemoryMemberRepository();
+        MemberServiceImpl memberService = new MemberServiceImpl();
+        MemberController memberController = new MemberController();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -40,9 +45,9 @@ public class Main {
                     System.out.print("조회할 회원 ID를 입력하세요: ");
                     try {
                         Long id = Long.parseLong(scanner.nextLine());
-                        Member foundMember = store.get(id);
-                        if (foundMember != null) {
-                            System.out.println("✅ 조회된 회원: ID=" + foundMember.getId() + ", 이름=" + foundMember.getName());
+                        Optional<Member> foundMember = memberController.findMemberById(id);
+                        if (foundMember.isPresent()) {
+                            System.out.println("✅ 조회된 회원: ID=" + foundMember.get().getId() + ", 이름=" + foundMember.get().getName());
                         } else {
                             System.out.println("⚠️ 해당 ID의 회원을 찾을 수 없습니다.");
                         }
@@ -52,11 +57,13 @@ public class Main {
                     break;
 
                 case "3":
-                    if (store.isEmpty()) {
+                    List<Member> allMembers = memberController.getAllMembers();
+                    if (allMembers.isEmpty()) {
                         System.out.println("ℹ️ 등록된 회원이 없습니다.");
-                    } else {
+                    }
+                    else {
                         System.out.println("--- 📋 전체 회원 목록 📋 ---");
-                        for (Member member : store.values()) {
+                        for (Member member : allMembers) {
                             System.out.println("👤 ID=" + member.getId() + ", 이름=" + member.getName());
                         }
                         System.out.println("--------------------------");
