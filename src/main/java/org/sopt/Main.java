@@ -31,14 +31,13 @@ public class Main {
                 case "1":
                     System.out.print("등록할 회원 이름을 입력하세요: ");
                     String name = scanner.nextLine();
-                    if (name.trim().isEmpty()) {
-                        System.out.println("⚠️ 이름을 입력해주세요.");
-                        continue;
-                    }
 
-                    Member newMember = new Member(sequence++, name);
-                    store.put(newMember.getId(), newMember);
-                    System.out.println("✅ 회원 등록 완료 (ID: " + newMember.getId() + ")");
+                    try {
+                        Long createdId = memberController.createMember(name);
+                        System.out.println("✅ 회원 등록 완료 (ID: " + createdId + ")");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("❌ 회원 등록 실패" + e.getMessage());
+                    }
                     break;
 
                 case "2":
@@ -78,25 +77,6 @@ public class Main {
                 default:
                     System.out.println("🚫 잘못된 메뉴 선택입니다. 다시 시도해주세요.");
             }
-        }
-    }
-
-    // 내부 클래스 형태로 Member 정의
-    static class Member {
-        private Long id;
-        private String name;
-
-        public Member(Long id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        public Long getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
         }
     }
 }
