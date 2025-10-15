@@ -26,4 +26,8 @@ public class MemoryMemberRepository {
         return store.values().stream()
                 .anyMatch(member -> member.getEmail().equals(email));
     }
+
+    public void deleteById(Long id) {
+        store.remove(id);
+    }
 }

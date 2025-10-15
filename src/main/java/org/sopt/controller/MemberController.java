@@ -21,4 +21,8 @@ public class MemberController {
     public List<Member> getAllMembers() {
         return memberService.findAllMembers();
     }
+
+    public void deleteMemberById(Long id) {
+        memberService.delete(id);
+    }
 }
