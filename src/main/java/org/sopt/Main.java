@@ -12,8 +12,6 @@ public class Main {
     public static void main(String[] args) {
 
         MainView mainView = new MainView();
-        MemoryMemberRepository memberRepository = new MemoryMemberRepository();
-        MemberServiceImpl memberService = new MemberServiceImpl();
         MemberController memberController = new MemberController();
 
         while (true) {
