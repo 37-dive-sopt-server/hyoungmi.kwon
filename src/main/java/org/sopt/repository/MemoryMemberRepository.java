@@ -28,6 +28,9 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     public void deleteById(Long id) {
+        if (!store.containsKey(id)) {
+            throw new IllegalArgumentException(ErrorCode.MEMBER_NOT_FOUND.getMessage());
+        }
         store.remove(id);
     }
 }
