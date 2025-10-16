@@ -1,6 +1,9 @@
 package org.sopt.view;
 
+import org.sopt.common.exception.InvalidDateFormatException;
+import org.sopt.common.exception.UnderAgeException;
 import org.sopt.domain.Member;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 import static org.sopt.validator.MemberValidator.*;
@@ -35,7 +38,7 @@ public class MainView {
                 validateName(name);
                 return name;
             } catch (IllegalArgumentException e) {
-                System.out.println("❌ " + e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -43,13 +46,18 @@ public class MainView {
     public String getValidatedBirthday() {
         while (true) {
             System.out.print("등록할 회원의 생년월일을 입력하세요(YYYY-MM-DD): ");
-            String birthday = scanner.nextLine();
+            String birthdayStr = scanner.nextLine();
 
             try {
-                validateBirthday(birthday);
-                return birthday;
-            } catch (IllegalArgumentException e) {
+                LocalDate birthday  = validateBirthday(birthdayStr);
+                validateAge(birthday);
+                return birthdayStr;
+            } catch (InvalidDateFormatException e) {
                 System.out.println(e.getMessage());
+            } catch (UnderAgeException e) {
+                System.out.println(e.getMessage());
+                // 20세 미만일 경우 null 반환
+                return null;
             }
         }
     }

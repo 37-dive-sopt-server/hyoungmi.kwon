@@ -1,6 +1,6 @@
 package org.sopt.service;
 
-import org.sopt.common.ErrorCode;
+import org.sopt.common.exception.ErrorCode;
 import org.sopt.domain.Gender;
 import org.sopt.domain.Member;
 import org.sopt.repository.MemoryMemberRepository;

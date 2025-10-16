@@ -4,8 +4,8 @@ import org.sopt.controller.MemberController;
 import org.sopt.domain.Member;
 import org.sopt.repository.MemoryMemberRepository;
 import org.sopt.service.MemberServiceImpl;
+import org.sopt.validator.MemberValidator;
 import org.sopt.view.MainView;
-
 import java.util.*;
 
 public class Main {
@@ -24,6 +24,10 @@ public class Main {
                 case "1":
                     String name = mainView.getValidatedName();
                     String birthday = mainView.getValidatedBirthday();
+                    // 20세 미만(birthday = null)일 경우 다시 메뉴를 보여주는 루프로 이동
+                    if (birthday == null) {
+                        break;
+                    }
                     String email = mainView.getValidatedEmail();
                     String gender = mainView.getValidatedGender();
 

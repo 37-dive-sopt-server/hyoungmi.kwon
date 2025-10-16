@@ -1,13 +1,16 @@
 package org.sopt.validator;
 
-import org.sopt.common.ErrorCode;
+import org.sopt.common.exception.ErrorCode;
+import org.sopt.common.exception.InvalidDateFormatException;
+import org.sopt.common.exception.UnderAgeException;
 import org.sopt.domain.Gender;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class MemberValidator {
+
+    static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public static void validateName(String name) {
         if (name == null || name.trim().isEmpty()) {
@@ -16,11 +19,19 @@ public class MemberValidator {
     }
 
     public static LocalDate validateBirthday(String birthdayStr) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
             return LocalDate.parse(birthdayStr, dateFormatter);
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException(ErrorCode.INVALID_DATE_FORMAT.getMessage());
+            throw new InvalidDateFormatException(ErrorCode.INVALID_DATE_FORMAT.getMessage());
+        }
+    }
+
+    public static void validateAge(LocalDate birthday) {
+        LocalDate today = LocalDate.now();
+        int age = today.getYear() - birthday.getYear() + 1;
+
+        if (age < 20) {
+            throw new UnderAgeException(ErrorCode.UNDERAGE.getMessage());
         }
     }
 
