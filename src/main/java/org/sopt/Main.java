@@ -2,9 +2,10 @@ package org.sopt;
 
 import org.sopt.controller.MemberController;
 import org.sopt.domain.Member;
+import org.sopt.repository.MemberRepository;
 import org.sopt.repository.MemoryMemberRepository;
+import org.sopt.service.MemberService;
 import org.sopt.service.MemberServiceImpl;
-import org.sopt.validator.MemberValidator;
 import org.sopt.view.MainView;
 import java.util.*;
 
@@ -12,7 +13,9 @@ public class Main {
     public static void main(String[] args) {
 
         MainView mainView = new MainView();
-        MemberController memberController = new MemberController();
+        MemberRepository memberRepository = new MemoryMemberRepository();
+        MemberService memberService = new MemberServiceImpl(memberRepository);
+        MemberController memberController = new MemberController(memberService);
 
         while (true) {
             mainView.showMenu();

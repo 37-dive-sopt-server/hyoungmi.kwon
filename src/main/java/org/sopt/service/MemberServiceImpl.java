@@ -3,6 +3,7 @@ package org.sopt.service;
 import org.sopt.common.exception.ErrorCode;
 import org.sopt.domain.Gender;
 import org.sopt.domain.Member;
+import org.sopt.repository.MemberRepository;
 import org.sopt.repository.MemoryMemberRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -11,8 +12,11 @@ import static org.sopt.validator.MemberValidator.*;
 
 public class MemberServiceImpl implements MemberService {
 
-    private MemoryMemberRepository memberRepository = new MemoryMemberRepository();
-    private static long sequence = 1L;
+    private final MemberRepository memberRepository;
+
+    public MemberServiceImpl(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     public Long join(String name, String birthdayStr, String email, String genderStr) {
         validateName(name);
