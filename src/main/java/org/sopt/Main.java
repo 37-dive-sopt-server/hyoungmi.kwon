@@ -2,8 +2,8 @@ package org.sopt;
 
 import org.sopt.controller.MemberController;
 import org.sopt.domain.Member;
+import org.sopt.repository.FileMemberRepository;
 import org.sopt.repository.MemberRepository;
-import org.sopt.repository.MemoryMemberRepository;
 import org.sopt.service.MemberService;
 import org.sopt.service.MemberServiceImpl;
 import org.sopt.view.MainView;
@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
 
         MainView mainView = new MainView();
-        MemberRepository memberRepository = new MemoryMemberRepository();
+        MemberRepository memberRepository = new FileMemberRepository();
         MemberService memberService = new MemberServiceImpl(memberRepository);
         MemberController memberController = new MemberController(memberService);
 
