@@ -9,6 +9,7 @@ public enum ErrorCode {
     INVALID_GENDER_TYPE("⚠️ 올바른 성별을 입력해주세요."),
     MEMBER_NOT_FOUND("❌ 존재하지 않는 회원입니다."),
     UNDERAGE("❌ 20세 미만은 가입할 수 없습니다.")
+    UNDER_AGE("❌ 20세 미만은 가입할 수 없습니다."),
     ;
 
     private final String message;

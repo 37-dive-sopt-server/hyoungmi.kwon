@@ -1,7 +1,7 @@
 package org.sopt.view;
 
-import org.sopt.common.exception.InvalidDateFormatException;
-import org.sopt.common.exception.UnderAgeException;
+import org.sopt.common.exception.ErrorCode;
+import org.sopt.common.exception.MemberException;
 import org.sopt.domain.Member;
 import org.sopt.validator.MemberValidator;
 import java.time.LocalDate;
@@ -52,12 +52,13 @@ public class MainView {
                 LocalDate birthday  = MemberValidator.validateBirthday(birthdayStr);
                 MemberValidator.validateAge(birthday);
                 return birthdayStr;
-            } catch (InvalidDateFormatException e) {
+            } catch (MemberException e) {
                 System.out.println(e.getMessage());
-            } catch (UnderAgeException e) {
-                System.out.println(e.getMessage());
-                // 20세 미만일 경우 null 반환
-                return null;
+
+                if (e.getErrorCode() == ErrorCode.UNDER_AGE) {
+                    // 20세 미만일 경우 null 반환
+                    return null;
+                }
             }
         }
     }

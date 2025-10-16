@@ -1,8 +1,7 @@
 package org.sopt.validator;
 
 import org.sopt.common.exception.ErrorCode;
-import org.sopt.common.exception.InvalidDateFormatException;
-import org.sopt.common.exception.UnderAgeException;
+import org.sopt.common.exception.MemberException;
 import org.sopt.domain.Gender;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -22,7 +21,7 @@ public class MemberValidator {
         try {
             return LocalDate.parse(birthdayStr, dateFormatter);
         } catch (DateTimeParseException e) {
-            throw new InvalidDateFormatException(ErrorCode.INVALID_DATE_FORMAT.getMessage());
+            throw new MemberException(ErrorCode.INVALID_DATE_FORMAT);
         }
     }
 
@@ -31,7 +30,7 @@ public class MemberValidator {
         int age = today.getYear() - birthday.getYear() + 1;
 
         if (age < 20) {
-            throw new UnderAgeException(ErrorCode.UNDERAGE.getMessage());
+            throw new MemberException(ErrorCode.UNDER_AGE);
         }
     }
 
