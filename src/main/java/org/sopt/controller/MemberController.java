@@ -1,14 +1,17 @@
 package org.sopt.controller;
 
 import org.sopt.domain.Member;
-import org.sopt.service.MemberServiceImpl;
-
+import org.sopt.service.MemberService;
 import java.util.List;
 import java.util.Optional;
 
 public class MemberController {
 
-    private MemberServiceImpl memberService = new MemberServiceImpl();
+    private final MemberService memberService;
+
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     public Long createMember(String name, String birthdayStr, String email, String genderStr) {
         return memberService.join(name, birthdayStr, email, genderStr);
