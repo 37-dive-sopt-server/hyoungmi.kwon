@@ -17,6 +17,7 @@ public class MemberServiceImpl implements MemberService {
         this.memberRepository = memberRepository;
     }
 
+    @Override
     public Long join(String name, String birthdayStr, String email, String genderStr) {
         validateName(name);
         LocalDate birthday = validateBirthday(birthdayStr);
@@ -32,14 +33,17 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
+    @Override
     public Optional<Member> findOne(Long memberId) {
         return memberRepository.findById(memberId);
     }
 
+    @Override
     public List<Member> findAllMembers() {
         return memberRepository.findAll();
     }
 
+    @Override
     public void delete(Long id) {
         if (memberRepository.findById(id).isEmpty()) {
             throw new IllegalArgumentException(ErrorCode.MEMBER_NOT_FOUND.getMessage());

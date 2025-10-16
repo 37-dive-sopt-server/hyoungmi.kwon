@@ -10,25 +10,30 @@ public class MemoryMemberRepository implements MemberRepository {
     private static final Map<Long, Member> store = new HashMap<>();
     private static Long sequence = 0L;
 
+    @Override
     public Long save(Member member) {
 
         store.put(++sequence, member);
         return sequence;
     }
 
+    @Override
     public Optional<Member> findById(Long id) {
         return Optional.ofNullable(store.get(id));
     }
 
+    @Override
     public List<Member> findAll() {
         return new ArrayList<>(store.values());
     }
 
+    @Override
     public boolean existsByEmail(String email) {
         return store.values().stream()
                 .anyMatch(member -> member.getEmail().equals(email));
     }
 
+    @Override
     public void deleteById(Long id) {
         if (!store.containsKey(id)) {
             throw new IllegalArgumentException(ErrorCode.MEMBER_NOT_FOUND.getMessage());
