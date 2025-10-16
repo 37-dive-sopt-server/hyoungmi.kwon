@@ -3,10 +3,10 @@ package org.sopt.view;
 import org.sopt.common.exception.InvalidDateFormatException;
 import org.sopt.common.exception.UnderAgeException;
 import org.sopt.domain.Member;
+import org.sopt.validator.MemberValidator;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
-import static org.sopt.validator.MemberValidator.*;
 
 // 입출력 담당
 public class MainView {
@@ -35,7 +35,7 @@ public class MainView {
             String name = scanner.nextLine();
 
             try {
-                validateName(name);
+                MemberValidator.validateName(name);
                 return name;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -49,8 +49,8 @@ public class MainView {
             String birthdayStr = scanner.nextLine();
 
             try {
-                LocalDate birthday  = validateBirthday(birthdayStr);
-                validateAge(birthday);
+                LocalDate birthday  = MemberValidator.validateBirthday(birthdayStr);
+                MemberValidator.validateAge(birthday);
                 return birthdayStr;
             } catch (InvalidDateFormatException e) {
                 System.out.println(e.getMessage());
@@ -68,7 +68,7 @@ public class MainView {
             String email = scanner.nextLine();
 
             try {
-                validateEmail(email);
+                MemberValidator.validateEmail(email);
                 return email;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -82,7 +82,7 @@ public class MainView {
             String gender = scanner.nextLine();
 
             try {
-                validateGender(gender);
+                MemberValidator.validateGender(gender);
                 return gender;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
