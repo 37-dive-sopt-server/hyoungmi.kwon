@@ -1,5 +1,6 @@
 package org.sopt.repository;
 
+import org.sopt.common.exception.ErrorCode;
 import org.sopt.domain.Member;
 
 import java.util.*;
@@ -7,11 +8,12 @@ import java.util.*;
 public class MemoryMemberRepository implements MemberRepository {
 
     private static final Map<Long, Member> store = new HashMap<>();
+    private static Long sequence = 0L;
 
-    public Member save(Member member) {
+    public Long save(Member member) {
 
-        store.put(member.getId(), member);
-        return member;
+        store.put(++sequence, member);
+        return sequence;
     }
 
     public Optional<Member> findById(Long id) {

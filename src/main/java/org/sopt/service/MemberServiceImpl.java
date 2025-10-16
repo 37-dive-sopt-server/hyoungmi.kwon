@@ -4,7 +4,6 @@ import org.sopt.common.exception.ErrorCode;
 import org.sopt.domain.Gender;
 import org.sopt.domain.Member;
 import org.sopt.repository.MemberRepository;
-import org.sopt.repository.MemoryMemberRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -28,9 +27,9 @@ public class MemberServiceImpl implements MemberService {
             throw new IllegalArgumentException(ErrorCode.DUPLICATE_EMAIL.getMessage());
         }
 
-        Member member = new Member(sequence++, name, birthday, email, gender);
-        memberRepository.save(member);
-        return member.getId();
+        Member member = new Member(null, name, birthday, email, gender);
+        return memberRepository.save(member);
+
     }
 
     public Optional<Member> findOne(Long memberId) {
