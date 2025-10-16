@@ -13,7 +13,7 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    public Long createMember(String name, String birthdayStr, String email, String genderStr) {
+    public Member createMember(String name, String birthdayStr, String email, String genderStr) {
         return memberService.join(name, birthdayStr, email, genderStr);
     }
 

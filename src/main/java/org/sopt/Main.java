@@ -33,8 +33,8 @@ public class Main {
                     String gender = mainView.getValidatedGender();
 
                     try {
-                        Long createdId = memberController.createMember(name, birthday, email, gender);
-                        mainView.showCreatedMember(createdId);
+                        Member newMember = memberController.createMember(name, birthday, email, gender);
+                        mainView.showCreatedMember(newMember.getId());
 
                     } catch (IllegalArgumentException e) {
                         mainView.showError(e.getMessage());

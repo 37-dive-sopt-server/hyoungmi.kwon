@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface MemberService {
 
-    Long join(String name, String email, String password, String role);
+    Member join(String name, String email, String password, String role);
 
     Optional<Member> findOne(Long memberId);
 

@@ -18,7 +18,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Long join(String name, String birthdayStr, String email, String genderStr) {
+    public Member join(String name, String birthdayStr, String email, String genderStr) {
         validateName(name);
         LocalDate birthday = validateBirthday(birthdayStr);
         validateEmail(email);

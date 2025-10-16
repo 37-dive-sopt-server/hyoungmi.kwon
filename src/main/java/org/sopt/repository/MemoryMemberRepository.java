@@ -11,10 +11,12 @@ public class MemoryMemberRepository implements MemberRepository {
     private static Long sequence = 0L;
 
     @Override
-    public Long save(Member member) {
-
-        store.put(++sequence, member);
-        return sequence;
+    public Member save(Member member) {
+        Member newMember = new Member(++sequence, member.getName(),
+                member.getBirthday(), member.getEmail(),
+                member.getGender());
+        store.put(newMember.getId(), newMember);
+        return newMember;
     }
 
     @Override
