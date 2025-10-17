@@ -1,6 +1,7 @@
 package org.sopt.repository;
 
 import org.sopt.common.exception.ErrorCode;
+import org.sopt.common.exception.MemberException;
 import org.sopt.domain.Member;
 
 import java.util.*;
@@ -38,7 +39,7 @@ public class MemoryMemberRepository implements MemberRepository {
     @Override
     public void deleteById(Long id) {
         if (!store.containsKey(id)) {
-            throw new IllegalArgumentException(ErrorCode.MEMBER_NOT_FOUND.getMessage());
+            throw new MemberException(ErrorCode.MEMBER_NOT_FOUND);
         }
         store.remove(id);
     }

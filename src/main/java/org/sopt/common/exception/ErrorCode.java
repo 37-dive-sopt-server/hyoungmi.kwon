@@ -9,9 +9,12 @@ public enum ErrorCode {
     INVALID_GENDER_TYPE("⚠️ 올바른 성별을 입력해주세요."),
     MEMBER_NOT_FOUND("❌ 존재하지 않는 회원입니다."),
     UNDER_AGE("❌ 20세 미만은 가입할 수 없습니다."),
+
     FILE_NOT_FOUND("❌ 파일이 존재하지 않습니다."),
     FILE_LOAD_ERROR("⚠️ 파일 로드 중 에러가 발생했습니다."),
-    FILE_SAVE_ERROR("⚠️ 파일 저장 중 에러가 발생했습니다.")
+    FILE_SAVE_ERROR("⚠️ 파일 저장 중 에러가 발생했습니다."),
+    FILE_FLUSH_ERROR("⚠️ 백그라운드 flush 중 에러가 발생했습니다."),
+    DIRECTORY_CREATE_ERROR("⚠️ 디렉토리 생성 중 에러가 발생했습니다.")
     ;
 
     private final String message;
