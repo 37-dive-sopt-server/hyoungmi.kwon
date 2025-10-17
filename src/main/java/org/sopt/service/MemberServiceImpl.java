@@ -1,6 +1,7 @@
 package org.sopt.service;
 
 import org.sopt.common.exception.ErrorCode;
+import org.sopt.common.exception.MemberException;
 import org.sopt.domain.Gender;
 import org.sopt.domain.Member;
 import org.sopt.repository.MemberRepository;
@@ -25,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
         Gender gender = validateGender(genderStr);
 
         if (memberRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException(ErrorCode.DUPLICATE_EMAIL.getMessage());
+            throw new MemberException(ErrorCode.DUPLICATE_EMAIL);
         }
 
         Member member = new Member(null, name, birthday, email, gender);
@@ -46,7 +47,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void delete(Long id) {
         if (memberRepository.findById(id).isEmpty()) {
-            throw new IllegalArgumentException(ErrorCode.MEMBER_NOT_FOUND.getMessage());
+            throw new MemberException(ErrorCode.MEMBER_NOT_FOUND);
         }
         memberRepository.deleteById(id);
     }
