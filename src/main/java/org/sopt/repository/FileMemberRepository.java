@@ -22,7 +22,6 @@ public class FileMemberRepository implements MemberRepository {
     private static final String SEPARATOR = ",";
     private final AtomicLong sequence = new AtomicLong(0);
     private final AtomicBoolean isDirty = new AtomicBoolean(false);
-    // Timer(boolean isDaemon)에서 isDaemon을 true를 주어 데몬스레드로 Timer를 생성한다. (백그라운드 타이머)
 
     /* 비동기 flush를 위한 executor
     ScheduledExecutorService: 일정 간격으로 flush를 자동 실행하는데 사용
