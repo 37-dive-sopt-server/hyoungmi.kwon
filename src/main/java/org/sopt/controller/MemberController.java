@@ -2,17 +2,19 @@ package org.sopt.controller;
 
 import org.sopt.domain.Member;
 import org.sopt.service.MemberService;
-
 import java.util.List;
 import java.util.Optional;
 
 public class MemberController {
 
-    private MemberService memberService;
+    private final MemberService memberService;
 
-    public Long createMember(String name) {
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
-        return memberService.join(name);
+    public Member createMember(String name, String birthdayStr, String email, String genderStr) {
+        return memberService.join(name, birthdayStr, email, genderStr);
     }
 
     public Optional<Member> findMemberById(Long id) {
@@ -21,5 +23,9 @@ public class MemberController {
 
     public List<Member> getAllMembers() {
         return memberService.findAllMembers();
+    }
+
+    public void deleteMemberById(Long id) {
+        memberService.delete(id);
     }
 }

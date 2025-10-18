@@ -1,95 +1,84 @@
 package org.sopt;
 
+import org.sopt.controller.MemberController;
+import org.sopt.domain.Member;
+import org.sopt.repository.FileMemberRepository;
+import org.sopt.repository.MemberRepository;
+import org.sopt.service.MemberService;
+import org.sopt.service.MemberServiceImpl;
+import org.sopt.view.MainView;
 import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) {
-        Map<Long, Member> store = new HashMap<>();
-        long sequence = 1L;
 
-        Scanner scanner = new Scanner(System.in);
+        MainView mainView = new MainView();
+        MemberRepository memberRepository = new FileMemberRepository();
+        MemberService memberService = new MemberServiceImpl(memberRepository);
+        MemberController memberController = new MemberController(memberService);
 
         while (true) {
-            System.out.println("\n✨ --- DIVE SOPT 회원 관리 서비스 --- ✨");
-            System.out.println("---------------------------------");
-            System.out.println("1️⃣. 회원 등록 ➕");
-            System.out.println("2️⃣. ID로 회원 조회 🔍");
-            System.out.println("3️⃣. 전체 회원 조회 📋");
-            System.out.println("4️⃣. 종료 🚪");
-            System.out.println("---------------------------------");
-            System.out.print("메뉴를 선택하세요: ");
-
-            String choice = scanner.nextLine();
+            mainView.showMenu();
+            String choice = mainView.getMenuChoice();
 
             switch (choice) {
                 case "1":
-                    System.out.print("등록할 회원 이름을 입력하세요: ");
-                    String name = scanner.nextLine();
-                    if (name.trim().isEmpty()) {
-                        System.out.println("⚠️ 이름을 입력해주세요.");
-                        continue;
+                    String name = mainView.getValidatedName();
+                    String birthday = mainView.getValidatedBirthday();
+                    // 20세 미만(birthday = null)일 경우 다시 메뉴를 보여주는 루프로 이동
+                    if (birthday == null) {
+                        break;
                     }
+                    String email = mainView.getValidatedEmail();
+                    String gender = mainView.getValidatedGender();
 
-                    Member newMember = new Member(sequence++, name);
-                    store.put(newMember.getId(), newMember);
-                    System.out.println("✅ 회원 등록 완료 (ID: " + newMember.getId() + ")");
+                    try {
+                        Member newMember = memberController.createMember(name, birthday, email, gender);
+                        mainView.showCreatedMember(newMember.getId());
+
+                    } catch (IllegalArgumentException e) {
+                        mainView.showError(e.getMessage());
+                    }
                     break;
 
                 case "2":
-                    System.out.print("조회할 회원 ID를 입력하세요: ");
                     try {
-                        Long id = Long.parseLong(scanner.nextLine());
-                        Member foundMember = store.get(id);
-                        if (foundMember != null) {
-                            System.out.println("✅ 조회된 회원: ID=" + foundMember.getId() + ", 이름=" + foundMember.getName());
+                        Long id = mainView.getMemberId(choice);
+                        Optional<Member> foundMember = memberController.findMemberById(id);
+
+                        if (foundMember.isPresent()) {
+                            mainView.showMember(foundMember.get());
                         } else {
-                            System.out.println("⚠️ 해당 ID의 회원을 찾을 수 없습니다.");
+                            mainView.showMemberNotFound();
                         }
                     } catch (NumberFormatException e) {
-                        System.out.println("❌ 유효하지 않은 ID 형식입니다. 숫자를 입력해주세요.");
+                        mainView.showError(e.getMessage());
                     }
                     break;
 
                 case "3":
-                    if (store.isEmpty()) {
-                        System.out.println("ℹ️ 등록된 회원이 없습니다.");
-                    } else {
-                        System.out.println("--- 📋 전체 회원 목록 📋 ---");
-                        for (Member member : store.values()) {
-                            System.out.println("👤 ID=" + member.getId() + ", 이름=" + member.getName());
-                        }
-                        System.out.println("--------------------------");
-                    }
+                    List<Member> allMembers = memberController.getAllMembers();
+                    mainView.showAllMembers(allMembers);
                     break;
 
                 case "4":
-                    System.out.println("👋 서비스를 종료합니다. 안녕히 계세요!");
-                    scanner.close();
+                    try {
+                        Long id = mainView.getMemberId(choice);
+                        memberController.deleteMemberById(id);
+                        mainView.showMemberDeleted(id);
+                    } catch (IllegalArgumentException e) {
+                        mainView.showError(e.getMessage());
+                    }
+                    break;
+
+                case "5":
+                    mainView.showEnd();
+                    mainView.close();
                     return;
 
                 default:
-                    System.out.println("🚫 잘못된 메뉴 선택입니다. 다시 시도해주세요.");
+                    mainView.showInvalidMenuChoice();
             }
-        }
-    }
-
-    // 내부 클래스 형태로 Member 정의
-    static class Member {
-        private Long id;
-        private String name;
-
-        public Member(Long id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        public Long getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
         }
     }
 }

@@ -1,28 +1,16 @@
 package org.sopt.service;
 
 import org.sopt.domain.Member;
-import org.sopt.repository.MemoryMemberRepository;
-
 import java.util.List;
 import java.util.Optional;
 
-public class MemberService {
+public interface MemberService {
 
-    private MemoryMemberRepository memberRepository;
-    private static long sequence = 1L;
+    Member join(String name, String email, String password, String role);
 
-    public Long join(String name) {
+    Optional<Member> findOne(Long memberId);
 
-        Member member = new Member(sequence++, name);
-        memberRepository.save(member);
-        return member.getId();
-    }
+    List<Member> findAllMembers();
 
-    public Optional<Member> findOne(Long memberId) {
-        return memberRepository.findById(memberId);
-    }
-
-    public List<Member> findAllMembers() {
-        return memberRepository.findAll();
-    }
+    void delete(Long id);
 }
