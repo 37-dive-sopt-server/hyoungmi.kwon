@@ -5,18 +5,20 @@ import org.sopt.common.exception.MemberException;
 import org.sopt.domain.Gender;
 import org.sopt.domain.Member;
 import org.sopt.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import static org.sopt.validator.MemberValidator.*;
 
+@Service
 public class MemberServiceImpl implements MemberService {
 
-    private final MemberRepository memberRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
-    public MemberServiceImpl(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
 
     @Override
     public Member join(String name, String birthdayStr, String email, String genderStr) {
