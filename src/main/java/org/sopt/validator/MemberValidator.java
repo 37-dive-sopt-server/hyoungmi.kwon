@@ -1,6 +1,6 @@
 package org.sopt.validator;
 
-import org.sopt.common.exception.ErrorCode;
+import org.sopt.common.response.ErrorCode;
 import org.sopt.common.exception.MemberException;
 import org.sopt.domain.Gender;
 import java.time.LocalDate;

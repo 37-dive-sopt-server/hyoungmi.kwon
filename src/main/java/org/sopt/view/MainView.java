@@ -1,6 +1,6 @@
 package org.sopt.view;
 
-import org.sopt.common.exception.ErrorCode;
+import org.sopt.common.response.ErrorCode;
 import org.sopt.common.exception.MemberException;
 import org.sopt.domain.Member;
 import org.sopt.validator.MemberValidator;

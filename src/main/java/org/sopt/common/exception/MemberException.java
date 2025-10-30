@@ -1,5 +1,7 @@
 package org.sopt.common.exception;
 
+import org.sopt.common.response.ErrorCode;
+
 public class MemberException extends RuntimeException {
 
     private final ErrorCode errorCode;
