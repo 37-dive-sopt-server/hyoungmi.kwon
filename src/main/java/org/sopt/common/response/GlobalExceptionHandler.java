@@ -2,7 +2,7 @@ package org.sopt.common.response;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.sopt.common.exception.GeneralException;
-import org.sopt.domain.Gender;
+import org.sopt.domain.member.entity.Gender;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;

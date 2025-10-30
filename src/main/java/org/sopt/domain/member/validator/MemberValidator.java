@@ -1,4 +1,4 @@
-package org.sopt.validator;
+package org.sopt.domain.member.validator;
 
 import org.sopt.common.response.ErrorCode;
 import org.sopt.common.exception.MemberException;

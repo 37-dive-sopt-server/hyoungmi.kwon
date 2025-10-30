@@ -1,10 +1,10 @@
-package org.sopt.repository;
+package org.sopt.domain.member.repository;
 
 import org.sopt.common.response.ErrorCode;
 import org.sopt.common.exception.FileException;
 import org.sopt.common.exception.MemberException;
-import org.sopt.domain.Gender;
-import org.sopt.domain.Member;
+import org.sopt.domain.member.entity.Gender;
+import org.sopt.domain.member.entity.Member;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;

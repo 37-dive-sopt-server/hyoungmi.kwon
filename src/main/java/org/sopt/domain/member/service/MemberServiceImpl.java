@@ -1,4 +1,4 @@
-package org.sopt.service;
+package org.sopt.domain.member.service;
 
 import org.sopt.common.response.ErrorCode;
 import org.sopt.common.exception.MemberException;
@@ -6,6 +6,8 @@ import org.sopt.domain.Gender;
 import org.sopt.domain.Member;
 import org.sopt.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.sopt.domain.member.entity.Gender;
+import org.sopt.domain.member.entity.Member;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

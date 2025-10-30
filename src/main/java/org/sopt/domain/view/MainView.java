@@ -1,9 +1,9 @@
-package org.sopt.view;
+package org.sopt.domain.view;
 
 import org.sopt.common.response.ErrorCode;
 import org.sopt.common.exception.MemberException;
-import org.sopt.domain.Member;
-import org.sopt.validator.MemberValidator;
+import org.sopt.domain.member.entity.Member;
+import org.sopt.domain.member.validator.MemberValidator;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
