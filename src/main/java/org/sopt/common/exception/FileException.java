@@ -2,12 +2,12 @@ package org.sopt.common.exception;
 
 import org.sopt.common.response.ErrorCode;
 
-public class FileException extends RuntimeException {
+public class FileException extends GeneralException {
 
     private final ErrorCode errorCode;
 
     public FileException(ErrorCode errorCode) {
-        super(errorCode.getMessage());
+        super(errorCode);
         this.errorCode = errorCode;
     }
 

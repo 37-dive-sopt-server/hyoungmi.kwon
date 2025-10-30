@@ -2,24 +2,23 @@ package org.sopt.domain.member.repository;
 
 import org.sopt.common.response.ErrorCode;
 import org.sopt.common.exception.MemberException;
+import org.sopt.common.utils.IdGenerator;
 import org.sopt.domain.member.entity.Member;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Primary
 @Repository
 public class MemoryMemberRepository implements MemberRepository {
 
     private static final Map<Long, Member> store = new HashMap<>();
-    private static Long sequence = 0L;
 
     @Override
     public Member save(Member member) {
-        Member newMember = new Member(++sequence, member.getName(),
-                member.getBirthday(), member.getEmail(),
-                member.getGender());
-        store.put(newMember.getId(), newMember);
-        return newMember;
+        store.put(member.getId(), member);
+        return member;
     }
 
     @Override

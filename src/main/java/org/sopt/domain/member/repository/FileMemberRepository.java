@@ -13,29 +13,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class FileMemberRepository implements MemberRepository {
 
     private static final String FILE_PATH = "data/members.txt";
-    /*
-    * ConcurrentHashMap, AtomicLong, AtomicBoolean: 멀티스레드 환경에서 안전하게 공유 데이터를 다루기 위한 클래스
-    * <ConcurrentHashMap>
-    * HashMap은 멀티스레드 환경에서 동시에 put/remove하면 구조가 깨질 수 있믕
-    * ConcurrentHashMap은 내부적으로 segment 단위로 락을 걸기 때문에 여러 스레드가 접근해도 안전하게 동작하며,
-    * 전체 Map에 락을 거는게 아니기 때문에 synchronized보다 훨씬 빠르다.
-    * 여기서는 flush 스레드가 store.values()을 읽는 동안 메인 스레드가 put/remove를 실행할 수 있으므로 동시 접근이 안전하게 보장된다.
-    *
-    * <AtomicLong>
-    * 여러 스레드가 동시에 save()을 호출해도 sequence 값이 꼬이지 않고 순차적으로 증가하도록 보장
-    *
-    * <AtomicBoolean>
-    * 내부적으로 CAS(compare-and-set) 연산을 사용해 값을 읽고 바꾸는 것을 원자적으로 처리하므로, flush 중에도 dirty flag을 안전하게 관리 가능
-    * (flush 스레드와 main 스레드가 동시에 isDirty를 수정하면 상태가 꼬일 수 있다.)
-    * */
     private final Map<Long, Member> store = new ConcurrentHashMap<>();
     private static final String SEPARATOR = ",";
-    private final AtomicLong sequence = new AtomicLong(0);
     private final AtomicBoolean isDirty = new AtomicBoolean(false);
 
     /* 비동기 flush를 위한 executor
@@ -76,13 +59,9 @@ public class FileMemberRepository implements MemberRepository {
 
     @Override
     public Member save(Member member) {
-        long id = sequence.incrementAndGet();
-        Member newMember = new Member(id, member.getName(),
-                member.getBirthday(), member.getEmail(),
-                member.getGender());
-        store.put(newMember.getId(), newMember);
+        store.put(member.getId(),member);
         isDirty.set(true);
-        return newMember;
+        return member;
     }
 
     @Override
@@ -123,15 +102,12 @@ public class FileMemberRepository implements MemberRepository {
                 String[] split = line.split(SEPARATOR);
                 Long id = Long.parseLong(split[0]);
                 String name = split[1];
-                LocalDate birthday = LocalDate.parse(split[2]);
+                LocalDate birthdate = LocalDate.parse(split[2]);
                 String email = split[3];
                 Gender gender = Gender.valueOf(split[4]);
 
-                Member member = new Member(id, name, birthday, email, gender);
-                store.put(id, member);
-
-                // 파일에서 불러온 id가 sequence보다 크면 sequence 업데이트 (파일에서 읽은 데이터 기준으로 sequence를 최신 id로 맞춤)
-                sequence.updateAndGet(current -> Math.max(current, id));
+                Member member = Member.restore(id, name, birthdate, email, gender);
+                store.put(member.getId(), member);
             }
         } catch (FileNotFoundException e) {
             throw new FileException(ErrorCode.FILE_NOT_FOUND);
@@ -164,7 +140,7 @@ public class FileMemberRepository implements MemberRepository {
             for (Member member : snapshot) {
                 String line = member.getId() + SEPARATOR +
                         member.getName() + SEPARATOR +
-                        member.getBirthday() + SEPARATOR +
+                        member.getBirthdate() + SEPARATOR +
                         member.getEmail() + SEPARATOR +
                         member.getGender();
                 bw.write(line);

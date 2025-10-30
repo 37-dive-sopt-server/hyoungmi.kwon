@@ -1,17 +1,16 @@
 package org.sopt.domain.member.service;
 
-import org.sopt.domain.Member;
-import org.sopt.domain.member.entity.Member;
+import org.sopt.domain.member.dto.request.MemberCreateRequestDTO;
+import org.sopt.domain.member.dto.response.MemberResponseDTO;
 import java.util.List;
-import java.util.Optional;
 
 public interface MemberService {
 
-    Member join(String name, String email, String password, String role);
+    MemberResponseDTO join(MemberCreateRequestDTO requestDTO);
 
-    Optional<Member> findOne(Long memberId);
+    MemberResponseDTO findOne(Long memberId);
 
-    List<Member> findAllMembers();
+    List<MemberResponseDTO> findAllMembers();
 
-    void delete(Long id);
+    void delete(Long memberId);
 }
