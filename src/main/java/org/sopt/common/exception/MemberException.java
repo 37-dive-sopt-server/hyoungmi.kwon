@@ -1,11 +1,13 @@
 package org.sopt.common.exception;
 
-public class MemberException extends RuntimeException {
+import org.sopt.common.response.ErrorCode;
+
+public class MemberException extends GeneralException {
 
     private final ErrorCode errorCode;
 
     public MemberException(ErrorCode errorCode) {
-        super(errorCode.getMessage());
+        super(errorCode);
         this.errorCode = errorCode;
     }
 
