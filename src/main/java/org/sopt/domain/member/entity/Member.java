@@ -1,12 +1,16 @@
 package org.sopt.domain.member.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.sopt.common.utils.IdGenerator;
+import org.sopt.domain.article.entity.Article;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,26 +32,6 @@ public class Member {
     }
 
     public Member() {}
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public LocalDate getBirthdate() {
-        return birthdate;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
 
     public static Member create(String name, LocalDate birthdate, String email, Gender gender) {
         return new Member(IdGenerator.next(), name, birthdate, email, gender);
