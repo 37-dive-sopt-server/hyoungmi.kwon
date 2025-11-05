@@ -44,10 +44,8 @@ public class Article {
         this.tag = tag;
     }
 
-    public static Article create(String title, String content, ArticleTag tag, Member member) {
-        Article article = new Article(title, content, tag);
-        member.addArticle(article);
-        return article;
+    public static Article create(String title, String content, ArticleTag tag) {
+        return new Article(title, content, tag);
     }
 
     public void connectMember(Member member) {

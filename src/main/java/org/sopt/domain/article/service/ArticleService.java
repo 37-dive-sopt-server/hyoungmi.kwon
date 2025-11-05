@@ -6,7 +6,6 @@ import org.sopt.common.response.ErrorCode;
 import org.sopt.domain.article.dto.request.ArticleCreateRequestDTO;
 import org.sopt.domain.article.dto.response.ArticleResponseDTO;
 import org.sopt.domain.article.entity.Article;
-import org.sopt.domain.article.entity.ArticleTag;
 import org.sopt.domain.article.repository.ArticleRepository;
 import org.sopt.domain.member.entity.Member;
 import org.sopt.domain.member.repository.MemberRepository;
@@ -23,19 +22,13 @@ public class ArticleService {
 
     @Transactional
     public ArticleResponseDTO createArticle(ArticleCreateRequestDTO requestDTO) {
-        ArticleTag tag = ArticleTag.from(requestDTO.tag());
         Member member = memberRepository.findById(requestDTO.memberId())
                 .orElseThrow(() -> new MemberException(ErrorCode.MEMBER_NOT_FOUND));
 
-        Article article = Article.create(
-                requestDTO.title(),
-                requestDTO.content(),
-                tag,
-                member
-        );
+        Article article = requestDTO.toEntity();
+        member.addArticle(article);
         articleRepository.save(article);
 
-        member.addArticle(article);
         return ArticleResponseDTO.of(article);
     }
 }

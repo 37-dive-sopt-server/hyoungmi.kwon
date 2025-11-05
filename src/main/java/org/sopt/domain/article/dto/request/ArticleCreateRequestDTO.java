@@ -2,6 +2,8 @@ package org.sopt.domain.article.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.sopt.domain.article.entity.Article;
+import org.sopt.domain.article.entity.ArticleTag;
 
 public record ArticleCreateRequestDTO(
         @NotNull(message = "회원 ID는 필수입니다.")
@@ -15,4 +17,8 @@ public record ArticleCreateRequestDTO(
 
         @NotBlank(message = "태그는 필수입니다.")
         String tag
-) { }
+) {
+        public Article toEntity() {
+                return Article.create(title, content, ArticleTag.from(tag));
+        }
+}
