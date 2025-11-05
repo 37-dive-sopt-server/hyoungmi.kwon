@@ -10,6 +10,8 @@ import org.sopt.domain.article.service.ArticleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/articles")
 @RequiredArgsConstructor
@@ -33,5 +35,13 @@ public class ArticleController {
         ArticleResponseDTO responseDTO = articleService.getArticleById(articleId);
         return ResponseEntity.status(SuccessCode.ARTICLE_FOUND.getStatus())
                 .body(ApiResponse.ok(SuccessCode.ARTICLE_FOUND, responseDTO));
+    }
+
+    // ⚪ 아티클 전체 조회 API
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<ArticleResponseDTO>>> getAllArticles() {
+        List<ArticleResponseDTO> responseDTOs = articleService.getArticles();
+        return ResponseEntity.status(SuccessCode.ARTICLE_FOUND.getStatus())
+                .body(ApiResponse.ok(SuccessCode.ARTICLE_FOUND, responseDTOs));
     }
 }

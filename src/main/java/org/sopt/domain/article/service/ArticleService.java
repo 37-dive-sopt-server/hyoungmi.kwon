@@ -13,6 +13,9 @@ import org.sopt.domain.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -37,5 +40,12 @@ public class ArticleService {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new ArticleException(ErrorCode.ARTICLE_NOT_FOUND));
         return ArticleResponseDTO.of(article);
+    }
+
+    public List<ArticleResponseDTO> getArticles() {
+        List<Article> articles = articleRepository.findAll();
+        return articles.stream()
+                .map(ArticleResponseDTO::of)
+                .collect(Collectors.toList());
     }
 }
