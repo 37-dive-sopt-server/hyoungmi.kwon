@@ -29,7 +29,8 @@ public enum ErrorCode {
 
     // Article
     INVALID_TAG(3001, HttpStatus.BAD_REQUEST, "❌ 유효하지 않은 태그값입니다."),
-    ARTICLE_NOT_FOUND(3002, HttpStatus.NOT_FOUND, "❌ 존재하지 않는 아티클입니다.")
+    ARTICLE_NOT_FOUND(3002, HttpStatus.NOT_FOUND, "❌ 존재하지 않는 아티클입니다."),
+    DUPLICATE_ARTICLE_TITLE(3003, HttpStatus.BAD_REQUEST, "⚠️ 이미 존재하는 아티클 제목입니다.")
     ;
 
     private final int code;

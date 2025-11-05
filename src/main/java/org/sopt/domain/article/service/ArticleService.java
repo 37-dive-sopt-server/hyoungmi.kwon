@@ -29,6 +29,10 @@ public class ArticleService {
         Member member = memberRepository.findById(requestDTO.memberId())
                 .orElseThrow(() -> new MemberException(ErrorCode.MEMBER_NOT_FOUND));
 
+        if (articleRepository.existsByTitle(requestDTO.title())) {
+            throw new ArticleException(ErrorCode.DUPLICATE_ARTICLE_TITLE);
+        }
+
         Article article = requestDTO.toEntity();
         member.addArticle(article);
         articleRepository.save(article);

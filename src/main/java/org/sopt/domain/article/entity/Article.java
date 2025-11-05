@@ -14,6 +14,12 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
+@Table(
+        name = "article",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"title"})
+        }
+)
 public class Article {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
