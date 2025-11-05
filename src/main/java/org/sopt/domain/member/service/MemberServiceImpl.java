@@ -17,17 +17,15 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
-    private final MemberValidator memberValidator;
     public MemberServiceImpl(MemberRepository memberRepository, MemberValidator memberValidator) {
         this.memberRepository = memberRepository;
-        this.memberValidator = memberValidator;
     }
 
     @Override
     public MemberResponseDTO join(MemberCreateRequestDTO requestDTO) {
         String name = requestDTO.name();
         LocalDate birthdate = requestDTO.birthdate();
-        memberValidator.validateAge(birthdate);
+        MemberValidator.validateAge(birthdate);
         String email = requestDTO.email();
         Gender gender = requestDTO.gender();
 
