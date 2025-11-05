@@ -1,9 +1,11 @@
 package org.sopt.common.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
+@AllArgsConstructor
 public enum ErrorCode {
 
     // common
@@ -31,16 +33,12 @@ public enum ErrorCode {
     FILE_SAVE_ERROR(3003, HttpStatus.INTERNAL_SERVER_ERROR,"⚠️ 파일 저장 중 에러가 발생했습니다."),
     FILE_FLUSH_ERROR(3004, HttpStatus.INTERNAL_SERVER_ERROR,"⚠️ 백그라운드 flush 중 에러가 발생했습니다."),
     DIRECTORY_CREATE_ERROR(3005, HttpStatus.INTERNAL_SERVER_ERROR,"⚠️ 디렉토리 생성 중 에러가 발생했습니다."),
+
+    // Article
+    INVALID_TAG(3006, HttpStatus.BAD_REQUEST, "❌ 유효하지 않은 태그값입니다.")
     ;
 
     private final int code;
     private final HttpStatus status;
     private final String message;
-
-    ErrorCode(int code, HttpStatus status, String message) {
-        this.code = code;
-        this.status = status;
-        this.message = message;
-    }
-
 }
