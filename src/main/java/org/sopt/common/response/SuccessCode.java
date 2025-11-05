@@ -1,7 +1,9 @@
 package org.sopt.common.response;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum SuccessCode {
 
     MEMBER_CREATED(1001, HttpStatus.CREATED, "✅ 회원이 성공적으로 등록되었습니다."),
@@ -19,15 +21,4 @@ public enum SuccessCode {
         this.message = message;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }

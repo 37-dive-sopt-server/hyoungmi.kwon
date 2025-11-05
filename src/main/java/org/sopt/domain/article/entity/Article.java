@@ -1,12 +1,17 @@
 package org.sopt.domain.article.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.sopt.domain.member.entity.Member;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Article {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

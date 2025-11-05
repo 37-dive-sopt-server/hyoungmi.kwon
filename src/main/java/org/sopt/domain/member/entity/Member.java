@@ -1,8 +1,9 @@
 package org.sopt.domain.member.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
-import org.sopt.common.utils.IdGenerator;
+import lombok.NoArgsConstructor;
 import org.sopt.domain.article.entity.Article;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

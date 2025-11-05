@@ -1,7 +1,9 @@
 package org.sopt.common.response;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum ErrorCode {
 
     // common
@@ -41,15 +43,4 @@ public enum ErrorCode {
         this.message = message;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }
