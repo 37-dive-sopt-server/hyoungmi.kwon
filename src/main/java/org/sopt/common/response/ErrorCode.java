@@ -28,7 +28,8 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(2007, HttpStatus.NOT_FOUND, "❌ 존재하지 않는 회원입니다."),
 
     // Article
-    INVALID_TAG(3006, HttpStatus.BAD_REQUEST, "❌ 유효하지 않은 태그값입니다.")
+    INVALID_TAG(3001, HttpStatus.BAD_REQUEST, "❌ 유효하지 않은 태그값입니다."),
+    ARTICLE_NOT_FOUND(3002, HttpStatus.NOT_FOUND, "❌ 존재하지 않는 아티클입니다.")
     ;
 
     private final int code;
