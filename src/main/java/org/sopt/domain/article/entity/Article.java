@@ -26,7 +26,7 @@ public class Article {
     @Column(name = "article_id")
     private Long id;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false, unique = true)
     private String title;
 
     @Column(name = "content", nullable = false)
