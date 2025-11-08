@@ -2,9 +2,9 @@ package org.sopt.common.exception;
 
 import org.sopt.common.response.ErrorCode;
 
-public class MemberException extends GeneralException {
+public class ArticleException extends GeneralException {
 
-    public MemberException(ErrorCode errorCode) {
+    public ArticleException(ErrorCode errorCode) {
         super(errorCode);
     }
 }

@@ -1,12 +1,18 @@
 package org.sopt.domain.member.entity;
 
 import jakarta.persistence.*;
-import org.sopt.common.utils.IdGenerator;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.sopt.domain.article.entity.Article;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,41 +25,19 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Article> articles = new ArrayList<>();
 
-    public Member(Long id, String name, LocalDate birthdate, String email, Gender gender) {
-        this.id = id;
+    public Member(String name, LocalDate birthdate, String email, Gender gender) {
         this.name = name;
         this.birthdate = birthdate;
         this.email = email;
         this.gender = gender;
     }
 
-    public Member() {}
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public LocalDate getBirthdate() {
-        return birthdate;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
     public static Member create(String name, LocalDate birthdate, String email, Gender gender) {
-        return new Member(IdGenerator.next(), name, birthdate, email, gender);
+        return new Member(name, birthdate, email, gender);
     }
 
-    public static Member restore(Long id, String name, LocalDate birthdate, String email, Gender gender) {
-        return new Member(id, name, birthdate, email, gender);
+    public void addArticle(Article article) {
+        this.articles.add(article);
+        article.connectMember(this);
     }
 }

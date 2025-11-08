@@ -1,7 +1,11 @@
 package org.sopt.common.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
+@AllArgsConstructor
 public enum ErrorCode {
 
     // common
@@ -23,33 +27,13 @@ public enum ErrorCode {
     UNDER_AGE(2006, HttpStatus.BAD_REQUEST, "❌ 20세 미만은 가입할 수 없습니다."),
     MEMBER_NOT_FOUND(2007, HttpStatus.NOT_FOUND, "❌ 존재하지 않는 회원입니다."),
 
-    // File
-    FILE_NOT_FOUND( 3001, HttpStatus.NOT_FOUND, "❌ 파일이 존재하지 않습니다."),
-    FILE_LOAD_ERROR(3002, HttpStatus.INTERNAL_SERVER_ERROR,"⚠️ 파일 로드 중 에러가 발생했습니다."),
-    FILE_SAVE_ERROR(3003, HttpStatus.INTERNAL_SERVER_ERROR,"⚠️ 파일 저장 중 에러가 발생했습니다."),
-    FILE_FLUSH_ERROR(3004, HttpStatus.INTERNAL_SERVER_ERROR,"⚠️ 백그라운드 flush 중 에러가 발생했습니다."),
-    DIRECTORY_CREATE_ERROR(3005, HttpStatus.INTERNAL_SERVER_ERROR,"⚠️ 디렉토리 생성 중 에러가 발생했습니다."),
+    // Article
+    INVALID_TAG(3001, HttpStatus.BAD_REQUEST, "❌ 유효하지 않은 태그값입니다."),
+    ARTICLE_NOT_FOUND(3002, HttpStatus.NOT_FOUND, "❌ 존재하지 않는 아티클입니다."),
+    DUPLICATE_ARTICLE_TITLE(3003, HttpStatus.BAD_REQUEST, "⚠️ 이미 존재하는 아티클 제목입니다.")
     ;
 
     private final int code;
     private final HttpStatus status;
     private final String message;
-
-    ErrorCode(int code, HttpStatus status, String message) {
-        this.code = code;
-        this.status = status;
-        this.message = message;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }
