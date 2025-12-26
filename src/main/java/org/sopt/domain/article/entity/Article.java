@@ -4,23 +4,15 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.sopt.common.entity.BaseEntity;
 import org.sopt.domain.member.entity.Member;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EntityListeners(AuditingEntityListener.class)
-@Table(
-        name = "article",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"title"})
-        }
-)
-public class Article {
+public class Article extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "article_id")
@@ -36,13 +28,12 @@ public class Article {
     @Column(name = "tag", nullable = false)
     private ArticleTag tag;
 
-    @CreatedDate
-    @Column(name = "created_date", nullable = false)
-    private LocalDate createdDate;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberId")
-    private Member member;
+    @JoinColumn(name = "member_id")
+    private Member author;
+
+    @OneToMany(mappedBy = "article")
+    private List<Comment> comments = new ArrayList<>();
 
     public Article(String title, String content, ArticleTag tag) {
         this.title = title;
@@ -52,9 +43,5 @@ public class Article {
 
     public static Article create(String title, String content, ArticleTag tag) {
         return new Article(title, content, tag);
-    }
-
-    public void connectMember(Member member) {
-        this.member = member;
     }
 }

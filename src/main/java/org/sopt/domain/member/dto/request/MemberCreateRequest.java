@@ -8,7 +8,7 @@ import org.sopt.domain.member.entity.Gender;
 
 import java.time.LocalDate;
 
-public record MemberCreateRequestDTO(
+public record MemberCreateRequest(
         @NotBlank(message = "이름은 필수입니다.")
         String name,
 

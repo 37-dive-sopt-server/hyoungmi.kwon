@@ -4,8 +4,8 @@ import org.sopt.common.response.ErrorCode;
 import org.sopt.common.exception.MemberException;
 import org.sopt.domain.member.entity.Gender;
 import org.sopt.domain.member.entity.Member;
-import org.sopt.domain.member.dto.request.MemberCreateRequestDTO;
-import org.sopt.domain.member.dto.response.MemberResponseDTO;
+import org.sopt.domain.member.dto.request.MemberCreateRequest;
+import org.sopt.domain.member.dto.response.MemberResponse;
 import org.sopt.domain.member.repository.MemberRepository;
 import org.sopt.domain.member.validator.MemberValidator;
 import org.springframework.stereotype.Service;
@@ -22,12 +22,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponseDTO join(MemberCreateRequestDTO requestDTO) {
-        String name = requestDTO.name();
-        LocalDate birthdate = requestDTO.birthdate();
+    public MemberResponse join(MemberCreateRequest request) {
+        String name = request.name();
+        LocalDate birthdate = request.birthdate();
         MemberValidator.validateAge(birthdate);
-        String email = requestDTO.email();
-        Gender gender = requestDTO.gender();
+        String email = request.email();
+        Gender gender = request.gender();
 
         if (memberRepository.existsByEmail(email)) {
             throw new MemberException(ErrorCode.DUPLICATE_EMAIL);
@@ -35,21 +35,21 @@ public class MemberServiceImpl implements MemberService {
 
         Member member = Member.create(name, birthdate, email, gender);
         memberRepository.save(member);
-        return MemberResponseDTO.of(member);
+        return MemberResponse.of(member);
     }
 
     @Override
-    public MemberResponseDTO findOne(Long memberId) {
+    public MemberResponse findOne(Long memberId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberException(ErrorCode.MEMBER_NOT_FOUND));
-        return MemberResponseDTO.of(member);
+        return MemberResponse.of(member);
     }
 
     @Override
-    public List<MemberResponseDTO> findAllMembers() {
+    public List<MemberResponse> findAllMembers() {
         List<Member> members = memberRepository.findAll();
         return members.stream()
-                .map(MemberResponseDTO::of)
+                .map(MemberResponse::of)
                 .toList();
     }
 

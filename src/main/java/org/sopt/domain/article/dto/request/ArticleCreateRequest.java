@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import org.sopt.domain.article.entity.Article;
 import org.sopt.domain.article.entity.ArticleTag;
 
-public record ArticleCreateRequestDTO(
+public record ArticleCreateRequest(
         @NotNull(message = "회원 ID는 필수입니다.")
         Long memberId,
 

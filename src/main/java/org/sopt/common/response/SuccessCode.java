@@ -15,7 +15,12 @@ public enum SuccessCode {
 
     // Article
     ARTICLE_CREATED(3001, HttpStatus.CREATED, "✅ 아티클이 성공적으로 등록되었습니다."),
-    ARTICLE_FOUND(3002, HttpStatus.OK, "✅ 아티클이 성공적으로 조회되었습니다.")
+    ARTICLE_FOUND(3002, HttpStatus.OK, "✅ 아티클이 성공적으로 조회되었습니다."),
+
+    // Comment
+    COMMENT_CREATED(4001, HttpStatus.CREATED, "✅ 댓글이 성공적으로 등록되었습니다."),
+    COMMENT_FOUND(4002, HttpStatus.OK, "✅ 댓글이 성공적으로 조회되었습니다."),
+    COMMENT_DELETED(4003, HttpStatus.OK, "✅ 댓글이 성공적으로 삭제되었습니다.")
     ;
 
     private final int code;

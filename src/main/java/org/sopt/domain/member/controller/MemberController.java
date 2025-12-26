@@ -3,8 +3,8 @@ package org.sopt.domain.member.controller;
 import jakarta.validation.Valid;
 import org.sopt.common.response.ApiResponse;
 import org.sopt.common.response.SuccessCode;
-import org.sopt.domain.member.dto.request.MemberCreateRequestDTO;
-import org.sopt.domain.member.dto.response.MemberResponseDTO;
+import org.sopt.domain.member.dto.request.MemberCreateRequest;
+import org.sopt.domain.member.dto.response.MemberResponse;
 import org.sopt.domain.member.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,27 +21,26 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<MemberResponseDTO>> createMember(
-            @RequestBody @Valid
-            MemberCreateRequestDTO requestDTO
+    public ResponseEntity<ApiResponse<MemberResponse>> createMember(
+            @RequestBody @Valid MemberCreateRequest request
     ) {
-        MemberResponseDTO responseDTO = memberService.join(requestDTO);
+        MemberResponse response = memberService.join(request);
         return ResponseEntity.status(SuccessCode.MEMBER_CREATED.getStatus())
-                .body(ApiResponse.ok(SuccessCode.MEMBER_CREATED, responseDTO));
+                .body(ApiResponse.ok(SuccessCode.MEMBER_CREATED, response));
     }
 
     @GetMapping("/{memberId}")
-    public ResponseEntity<ApiResponse<MemberResponseDTO>> findMemberById(@PathVariable Long memberId) {
-        MemberResponseDTO responseDTO = memberService.findOne(memberId);
+    public ResponseEntity<ApiResponse<MemberResponse>> findMemberById(@PathVariable Long memberId) {
+        MemberResponse response = memberService.findOne(memberId);
         return ResponseEntity.status(SuccessCode.MEMBER_FOUND.getStatus())
-                .body(ApiResponse.ok(SuccessCode.MEMBER_FOUND, responseDTO));
+                .body(ApiResponse.ok(SuccessCode.MEMBER_FOUND, response));
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<MemberResponseDTO>>> getAllMembers() {
-        List<MemberResponseDTO> responseDTOs = memberService.findAllMembers();
+    public ResponseEntity<ApiResponse<List<MemberResponse>>> getAllMembers() {
+        List<MemberResponse> response = memberService.findAllMembers();
         return ResponseEntity.status(SuccessCode.MEMBER_FOUND.getStatus())
-                .body(ApiResponse.ok(SuccessCode.MEMBER_FOUND, responseDTOs));
+                .body(ApiResponse.ok(SuccessCode.MEMBER_FOUND, response));
     }
 
     @DeleteMapping("/{memberId}")
