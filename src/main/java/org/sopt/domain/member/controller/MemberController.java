@@ -22,26 +22,25 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<ApiResponse<MemberResponse>> createMember(
-            @RequestBody @Valid
-            MemberCreateRequest requestDTO
+            @RequestBody @Valid MemberCreateRequest request
     ) {
-        MemberResponse responseDTO = memberService.join(requestDTO);
+        MemberResponse response = memberService.join(request);
         return ResponseEntity.status(SuccessCode.MEMBER_CREATED.getStatus())
-                .body(ApiResponse.ok(SuccessCode.MEMBER_CREATED, responseDTO));
+                .body(ApiResponse.ok(SuccessCode.MEMBER_CREATED, response));
     }
 
     @GetMapping("/{memberId}")
     public ResponseEntity<ApiResponse<MemberResponse>> findMemberById(@PathVariable Long memberId) {
-        MemberResponse responseDTO = memberService.findOne(memberId);
+        MemberResponse response = memberService.findOne(memberId);
         return ResponseEntity.status(SuccessCode.MEMBER_FOUND.getStatus())
-                .body(ApiResponse.ok(SuccessCode.MEMBER_FOUND, responseDTO));
+                .body(ApiResponse.ok(SuccessCode.MEMBER_FOUND, response));
     }
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<MemberResponse>>> getAllMembers() {
-        List<MemberResponse> responseDTOs = memberService.findAllMembers();
+        List<MemberResponse> response = memberService.findAllMembers();
         return ResponseEntity.status(SuccessCode.MEMBER_FOUND.getStatus())
-                .body(ApiResponse.ok(SuccessCode.MEMBER_FOUND, responseDTOs));
+                .body(ApiResponse.ok(SuccessCode.MEMBER_FOUND, response));
     }
 
     @DeleteMapping("/{memberId}")

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MemberService {
 
-    MemberResponse join(MemberCreateRequest requestDTO);
+    MemberResponse join(MemberCreateRequest request);
 
     MemberResponse findOne(Long memberId);
 

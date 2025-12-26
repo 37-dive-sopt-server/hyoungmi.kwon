@@ -22,26 +22,26 @@ public class ArticleController {
     // ⚪ 아티클 생성 API
     @PostMapping
     public ResponseEntity<ApiResponse<ArticleResponse>> createArticle(
-            @Valid @RequestBody ArticleCreateRequest articleCreateRequestDTO
+            @Valid @RequestBody ArticleCreateRequest articleCreateRequest
     ) {
-        ArticleResponse responseDTO = articleService.createArticle(articleCreateRequestDTO);
+        ArticleResponse response = articleService.createArticle(articleCreateRequest);
         return ResponseEntity.status(SuccessCode.ARTICLE_CREATED.getStatus())
-                .body(ApiResponse.ok(SuccessCode.ARTICLE_CREATED, responseDTO));
+                .body(ApiResponse.ok(SuccessCode.ARTICLE_CREATED, response));
     }
 
     // ⚪ 아티클 단일 조회 API
     @GetMapping("/{articleId}")
     public ResponseEntity<ApiResponse<ArticleResponse>> getArticle(@PathVariable Long articleId) {
-        ArticleResponse responseDTO = articleService.getArticleById(articleId);
+        ArticleResponse response = articleService.getArticleById(articleId);
         return ResponseEntity.status(SuccessCode.ARTICLE_FOUND.getStatus())
-                .body(ApiResponse.ok(SuccessCode.ARTICLE_FOUND, responseDTO));
+                .body(ApiResponse.ok(SuccessCode.ARTICLE_FOUND, response));
     }
 
     // ⚪ 아티클 전체 조회 API
     @GetMapping
     public ResponseEntity<ApiResponse<List<ArticleResponse>>> getAllArticles() {
-        List<ArticleResponse> responseDTOs = articleService.getArticles();
+        List<ArticleResponse> response = articleService.getArticles();
         return ResponseEntity.status(SuccessCode.ARTICLE_FOUND.getStatus())
-                .body(ApiResponse.ok(SuccessCode.ARTICLE_FOUND, responseDTOs));
+                .body(ApiResponse.ok(SuccessCode.ARTICLE_FOUND, response));
     }
 }

@@ -25,15 +25,15 @@ public class ArticleService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public ArticleResponse createArticle(ArticleCreateRequest requestDTO) {
-        Member member = memberRepository.findById(requestDTO.memberId())
+    public ArticleResponse createArticle(ArticleCreateRequest request) {
+        Member member = memberRepository.findById(request.memberId())
                 .orElseThrow(() -> new MemberException(ErrorCode.MEMBER_NOT_FOUND));
 
-        if (articleRepository.existsByTitle(requestDTO.title())) {
+        if (articleRepository.existsByTitle(request.title())) {
             throw new ArticleException(ErrorCode.DUPLICATE_ARTICLE_TITLE);
         }
 
-        Article article = requestDTO.toEntity();
+        Article article = request.toEntity();
         articleRepository.save(article);
 
         return ArticleResponse.of(article);

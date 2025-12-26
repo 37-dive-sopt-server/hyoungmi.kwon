@@ -22,12 +22,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponse join(MemberCreateRequest requestDTO) {
-        String name = requestDTO.name();
-        LocalDate birthdate = requestDTO.birthdate();
+    public MemberResponse join(MemberCreateRequest request) {
+        String name = request.name();
+        LocalDate birthdate = request.birthdate();
         MemberValidator.validateAge(birthdate);
-        String email = requestDTO.email();
-        Gender gender = requestDTO.gender();
+        String email = request.email();
+        Gender gender = request.gender();
 
         if (memberRepository.existsByEmail(email)) {
             throw new MemberException(ErrorCode.DUPLICATE_EMAIL);
