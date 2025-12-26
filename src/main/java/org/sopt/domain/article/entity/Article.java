@@ -29,7 +29,7 @@ public class Article extends BaseEntity {
     private ArticleTag tag;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberId")
+    @JoinColumn(name = "member_id")
     private Member author;
 
     @OneToMany(mappedBy = "article")
@@ -43,9 +43,5 @@ public class Article extends BaseEntity {
 
     public static Article create(String title, String content, ArticleTag tag) {
         return new Article(title, content, tag);
-    }
-
-    public void assignAuthor(Member author) {
-        this.author = author;
     }
 }
