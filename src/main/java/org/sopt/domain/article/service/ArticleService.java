@@ -34,7 +34,6 @@ public class ArticleService {
         }
 
         Article article = requestDTO.toEntity();
-        member.addArticle(article);
         articleRepository.save(article);
 
         return ArticleResponse.of(article);

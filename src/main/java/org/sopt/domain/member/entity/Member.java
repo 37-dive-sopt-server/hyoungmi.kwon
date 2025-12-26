@@ -4,11 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.sopt.domain.article.entity.Article;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -22,9 +18,6 @@ public class Member {
     private String email;
     private Gender gender;
 
-    @OneToMany(mappedBy = "author")
-    private List<Article> articles = new ArrayList<>();
-
     public Member(String name, LocalDate birthdate, String email, Gender gender) {
         this.name = name;
         this.birthdate = birthdate;
@@ -36,8 +29,4 @@ public class Member {
         return new Member(name, birthdate, email, gender);
     }
 
-    public void addArticle(Article article) {
-        this.articles.add(article);
-        article.assignAuthor(this);
-    }
 }
