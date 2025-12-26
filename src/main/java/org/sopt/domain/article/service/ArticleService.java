@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.sopt.common.exception.ArticleException;
 import org.sopt.common.exception.MemberException;
 import org.sopt.common.response.ErrorCode;
-import org.sopt.domain.article.dto.request.ArticleCreateRequestDTO;
-import org.sopt.domain.article.dto.response.ArticleResponseDTO;
+import org.sopt.domain.article.dto.request.ArticleCreateRequest;
+import org.sopt.domain.article.dto.response.ArticleResponse;
 import org.sopt.domain.article.entity.Article;
 import org.sopt.domain.article.repository.ArticleRepository;
 import org.sopt.domain.member.entity.Member;
@@ -25,7 +25,7 @@ public class ArticleService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public ArticleResponseDTO createArticle(ArticleCreateRequestDTO requestDTO) {
+    public ArticleResponse createArticle(ArticleCreateRequest requestDTO) {
         Member member = memberRepository.findById(requestDTO.memberId())
                 .orElseThrow(() -> new MemberException(ErrorCode.MEMBER_NOT_FOUND));
 
@@ -37,19 +37,19 @@ public class ArticleService {
         member.addArticle(article);
         articleRepository.save(article);
 
-        return ArticleResponseDTO.of(article);
+        return ArticleResponse.of(article);
     }
 
-    public ArticleResponseDTO getArticleById(Long articleId) {
+    public ArticleResponse getArticleById(Long articleId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new ArticleException(ErrorCode.ARTICLE_NOT_FOUND));
-        return ArticleResponseDTO.of(article);
+        return ArticleResponse.of(article);
     }
 
-    public List<ArticleResponseDTO> getArticles() {
+    public List<ArticleResponse> getArticles() {
         List<Article> articles = articleRepository.findAll();
         return articles.stream()
-                .map(ArticleResponseDTO::of)
+                .map(ArticleResponse::of)
                 .collect(Collectors.toList());
     }
 }

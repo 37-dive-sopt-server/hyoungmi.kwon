@@ -22,7 +22,7 @@ public class Member {
     private String email;
     private Gender gender;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "author")
     private List<Article> articles = new ArrayList<>();
 
     public Member(String name, LocalDate birthdate, String email, Gender gender) {
@@ -38,6 +38,6 @@ public class Member {
 
     public void addArticle(Article article) {
         this.articles.add(article);
-        article.connectMember(this);
+        article.assignAuthor(this);
     }
 }
